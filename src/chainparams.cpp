@@ -14,9 +14,12 @@
 // Main network
 //
 
-unsigned int pnSeed[] =
+static const char * pnSeed[] =
 {
-    0x12345678
+	"66.85.164.76",
+	"184.95.40.150",
+	"107.170.140.109",
+	"162.243.15.107"
 };
 
 class CMainParams : public CChainParams {
@@ -27,7 +30,7 @@ public:
         pchMessageStart[1] = 0x3b;
         pchMessageStart[2] = 0x3c;
         pchMessageStart[3] = 0x7e;
-        vAlertPubKey = ParseHex("045337216002ca6a71d63edf062895417610a723d453e722bf4728996c58661cdac3d4dec5cecd449b9086e9602b35cc726a9e0163e1a4d40f521fbdaebb674658");
+        vAlertPubKey = ParseHex("04f98b76210c6ab77a59927afb30bc1419e9ef94cb00d9f9a26f5a1eb2a7f0d185b4e4200d8f3c1860e2b305ce448db1f703fc6a673888ee3c0c2ce8fec74e5337");
         nDefaultPort = 8921;
         nRPCPort = 8920;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20);
@@ -93,9 +96,7 @@ public:
             // it'll get a pile of addresses with newer timestamps.
             // Seed nodes are given a random 'last seen time' 
             const int64 nTwoDays = 2 * 24 * 60 * 60;
-            struct in_addr ip;
-            memcpy(&ip, &pnSeed[i], sizeof(ip));
-            CAddress addr(CService(ip, GetDefaultPort()));
+            CAddress addr(CService(pnSeed[i], GetDefaultPort()));
             addr.nTime = GetTime() - GetRand(nTwoDays) - nTwoDays;
             vFixedSeeds.push_back(addr);
         }
